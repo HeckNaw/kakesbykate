@@ -1,6 +1,6 @@
 {
-  "name": "Kakes by Kate",
-  "short_name": "Kakes by Kate",
+  "name": "MyWebSite",
+  "short_name": "MySite",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -16,6 +16,6 @@
     }
   ],
   "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "background_color": "#FFABBB",
   "display": "standalone"
 }
