@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import Header from './components/Header'
+import SplashScreen from './components/SplashScreen'
 import Home from './sections/Home'
 import InstaFeature from './sections/InstaFeature'
 import Menu from './sections/Menu'
@@ -62,11 +63,31 @@ function useLenis() {
   }, [])
 }
 
+const SPLASH_KEY = 'kbk-splash-shown'
+
 function App() {
+  const [splashing, setSplashing] = useState(() => {
+    try {
+      return sessionStorage.getItem(SPLASH_KEY) !== '1'
+    } catch {
+      return true
+    }
+  })
+
+  function dismissSplash() {
+    try {
+      sessionStorage.setItem(SPLASH_KEY, '1')
+    } catch {
+      // ignore — splash will just show again next load
+    }
+    setSplashing(false)
+  }
+
   useLenis()
   useScrollReveal()
   return (
     <div className="site">
+      {splashing && <SplashScreen onDone={dismissSplash} />}
       <Header />
       <main>
         <Home />
