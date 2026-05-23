@@ -27,14 +27,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-h);
-  /* Raspberry under-layer so mobile bottom-overscroll / dynamic-viewport gap
-     under Chrome's nav bar matches the footer instead of flashing cream. */
-  background: var(--rasp);
 }
 
 html, body, #root {
   margin: 0;
   padding: 0;
+  background: var(--paper);
   color: var(--plum);
   font-family: var(--body);
   font-size: 17px;
@@ -43,9 +41,6 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-}
-body, #root {
-  background: var(--paper);
 }
 html, body { overflow-x: clip; }
 
