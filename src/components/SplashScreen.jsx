@@ -9,16 +9,13 @@ function SplashScreen({ onDone }) {
   const [phase, setPhase] = useState('fill')
 
   useEffect(() => {
-    // Pause Lenis (if present) instead of locking body overflow — locking
-    // overflow during splash was clipping document height on mobile and
-    // leaving a cream gap below the fold after dismissal.
-    const lenis = window.__lenis
-    lenis?.stop?.()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
     const t1 = setTimeout(() => setPhase('pop'), FILL_MS)
     const t2 = setTimeout(() => setPhase('fade'), FILL_MS + POP_MS)
     const t3 = setTimeout(() => {
-      lenis?.start?.()
+      document.body.style.overflow = previousOverflow
       onDone()
     }, FILL_MS + POP_MS + FADE_MS)
 
@@ -26,7 +23,7 @@ function SplashScreen({ onDone }) {
       clearTimeout(t1)
       clearTimeout(t2)
       clearTimeout(t3)
-      lenis?.start?.()
+      document.body.style.overflow = previousOverflow
     }
   }, [onDone])
 
