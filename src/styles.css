@@ -467,15 +467,15 @@ a:hover { color: var(--rasp-dark); }
 /* ───────── Menu ───────── */
 .section-menu {
   padding-top: 0;
-  padding-bottom: clamp(10rem, 20vw, 18rem);
+  padding-bottom: clamp(6rem, 12vw, 11rem);
 }
 .section-order {
   padding-top: 0;
-  padding-bottom: clamp(10rem, 20vw, 18rem);
+  padding-bottom: clamp(6rem, 12vw, 11rem);
 }
 .section-contact {
   padding-top: 0;
-  padding-bottom: clamp(10rem, 20vw, 18rem);
+  padding-bottom: clamp(6rem, 12vw, 11rem);
 }
 .menu-frame {
   position: relative;
@@ -859,7 +859,7 @@ a:hover { color: var(--rasp-dark); }
 /* ───────── IG feature section ───────── */
 .section-ig-feature {
   padding-top: clamp(2rem, 4vw, 3rem);
-  padding-bottom: clamp(10rem, 20vw, 18rem);
+  padding-bottom: clamp(6rem, 12vw, 11rem);
 }
 .ig-feature {
   display: flex;
