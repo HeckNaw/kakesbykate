@@ -5,12 +5,13 @@ import macaron1 from "../assets/macaron1.jpg";
 function scrollTo(id) {
   return (e) => {
     e.preventDefault();
-    const el = document.getElementById(id);
-    if (!el) return;
+    const section = document.getElementById(id);
+    if (!section) return;
+    const target = section.querySelector(".section-head") || section;
     if (window.__lenis) {
-      window.__lenis.scrollTo(el);
+      window.__lenis.scrollTo(target);
     } else {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 }

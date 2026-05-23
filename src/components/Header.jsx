@@ -31,12 +31,15 @@ function Header() {
   function scrollTo(id) {
     return (e) => {
       e.preventDefault()
-      const el = document.getElementById(id)
-      if (!el) return
+      const section = document.getElementById(id)
+      if (!section) return
+      // Scroll past the section's top padding to the actual content (.section-head).
+      // Home doesn't have one (.hero instead) — falls back to the section itself.
+      const target = section.querySelector('.section-head') || section
       if (window.__lenis) {
-        window.__lenis.scrollTo(el)
+        window.__lenis.scrollTo(target)
       } else {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
     }
   }

@@ -230,7 +230,7 @@ a:hover { color: var(--rasp-dark); }
 /* ───────── Sections ───────── */
 .section {
   scroll-margin-top: var(--header-h);
-  padding: clamp(2rem, 3.5vw, 3rem) clamp(1.5rem, 5vw, 4rem) clamp(5rem, 10vw, 9rem);
+  padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
   max-width: var(--max);
   margin: 0 auto;
   position: relative;
@@ -466,7 +466,16 @@ a:hover { color: var(--rasp-dark); }
 
 /* ───────── Menu ───────── */
 .section-menu {
-  padding-top: clamp(4rem, 8vw, 7rem);
+  padding-top: 0;
+  padding-bottom: clamp(10rem, 20vw, 18rem);
+}
+.section-order {
+  padding-top: 0;
+  padding-bottom: clamp(10rem, 20vw, 18rem);
+}
+.section-contact {
+  padding-top: 0;
+  padding-bottom: clamp(10rem, 20vw, 18rem);
 }
 .menu-frame {
   position: relative;
@@ -850,7 +859,7 @@ a:hover { color: var(--rasp-dark); }
 /* ───────── IG feature section ───────── */
 .section-ig-feature {
   padding-top: clamp(2rem, 4vw, 3rem);
-  padding-bottom: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(10rem, 20vw, 18rem);
 }
 .ig-feature {
   display: flex;
