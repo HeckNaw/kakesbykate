@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 
 // ───────── Config ─────────
 // Google Apps Script Web App URL. The script appends each order to a Google
@@ -136,10 +136,33 @@ function Order() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const sectionRef = useRef(null)
 
-  // Object URLs for thumbnail previews; revoked when the file list changes.
+  // Object URLs for thumbnail previews. useMemo creates them as `files` changes;
+  // the effect's cleanup revokes the *previous* set (already replaced on screen),
+  // so a URL is never revoked while it's still being displayed.
   const previews = useMemo(() => files.map((f) => URL.createObjectURL(f)), [files])
   useEffect(() => () => previews.forEach((url) => URL.revokeObjectURL(url)), [previews])
+
+  function closeThanks() {
+    setSubmitted(false)
+    setForm(initialForm)
+    setFiles([])
+  }
+
+  // Close the thank-you popup on Escape.
+  useEffect(() => {
+    if (!submitted) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setSubmitted(false)
+        setForm(initialForm)
+        setFiles([])
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [submitted])
 
   function update(field) {
     return (e) => setForm((f) => ({ ...f, [field]: e.target.value }))
@@ -181,6 +204,12 @@ function Order() {
       }
 
       setSubmitted(true)
+      // Bring the popup into view (it's anchored within the order section).
+      const section = sectionRef.current
+      if (section) {
+        if (window.__lenis) window.__lenis.scrollTo(section, { offset: -10 })
+        else section.scrollIntoView({ behavior: 'smooth' })
+      }
     } catch (err) {
       setError(
         'Something went wrong sending your order. Please try again, or reach out on Instagram.'
@@ -194,7 +223,7 @@ function Order() {
   const showPhotos = ['cake', 'cupcake', 'other'].includes(form.productType)
 
   return (
-    <section id="order" className="section section-order">
+    <section id="order" ref={sectionRef} className="section section-order">
       <div className="section-head reveal">
         <span className="section-num" data-num="03">— place an order</span>
         <h2>Tell us about<br /><em>your order.</em></h2>
@@ -203,15 +232,6 @@ function Order() {
         </p>
       </div>
 
-      {submitted ? (
-        <div className="thanks reveal">
-          <h3>Sweet — we got it.</h3>
-          <p>
-            Kate will review your request and reply within 48 hours via Instagram or email.
-            {form.email ? ' A copy of your order has been sent to your inbox.' : ''}
-          </p>
-        </div>
-      ) : (
         <form className="order-form reveal reveal--d1" onSubmit={handleSubmit}>
           {/* ───────── Step 1: Your details ───────── */}
           <fieldset className="order-group">
@@ -525,6 +545,35 @@ function Order() {
             </button>
           </div>
         </form>
+
+      {submitted && (
+        <div
+          className="order-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="order-thanks-title"
+          onClick={closeThanks}
+        >
+          <div className="order-modal-card" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="order-modal-close"
+              aria-label="Close"
+              onClick={closeThanks}
+            >
+              ×
+            </button>
+            <div className="order-modal-emoji" aria-hidden="true">🎂</div>
+            <h3 id="order-thanks-title">Sweet — we got it!</h3>
+            <p>
+              Kate will review your request and reply within 48 hours via Instagram or email.
+              {form.email ? ' A copy of your order has been sent to your inbox.' : ''}
+            </p>
+            <button type="button" className="btn btn-primary" onClick={closeThanks}>
+              Done
+            </button>
+          </div>
+        </div>
       )}
     </section>
   )

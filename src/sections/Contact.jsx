@@ -13,7 +13,7 @@ function Contact() {
         <div className="contact-card feature reveal reveal--d1">
           <h4>Email</h4>
           <p className="big">
-            <a href="mailto:orders@kakesbykate.com">orders@kakesbykate.com</a>
+            <a href="mailto:kakesbykate24@gmail.com">kakesbykate24@gmail.com</a>
           </p>
         </div>
         <div className="contact-card reveal reveal--d2">

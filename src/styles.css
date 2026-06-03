@@ -472,6 +472,7 @@ a:hover { color: var(--rasp-dark); }
 .section-order {
   padding-top: 0;
   padding-bottom: clamp(6rem, 12vw, 11rem);
+  position: relative;
 }
 .section-contact {
   padding-top: 0;
@@ -1021,6 +1022,77 @@ a:hover { color: var(--rasp-dark); }
   font-size: 2.4rem;
   margin-bottom: 0.6rem;
   line-height: 1;
+}
+
+/* Thank-you popup — anchored within the order section */
+.order-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 8vh, 6rem) clamp(1rem, 4vw, 3rem);
+  background: rgba(58, 26, 35, 0.55);
+  backdrop-filter: blur(6px) saturate(1.2);
+  -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  animation: lightbox-fade 0.28s ease-out;
+}
+.order-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  padding: clamp(2rem, 5vw, 3rem);
+  text-align: center;
+  background: var(--paper);
+  border: 2px solid var(--blush-deep);
+  border-radius: 24px;
+  box-shadow:
+    0 1px 0 var(--blush-deep),
+    0 32px 80px -30px rgba(207, 85, 103, 0.5);
+  animation: lightbox-scale 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.order-modal-emoji {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.order-modal-card h3 {
+  font-family: var(--script);
+  color: var(--rasp);
+  font-size: 2.7rem;
+  line-height: 1;
+  margin: 0 0 0.7rem;
+}
+.order-modal-card p {
+  color: var(--plum-soft);
+  margin: 0 0 1.7rem;
+}
+.order-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--blush);
+  border: 2px solid var(--blush-deep);
+  color: var(--rasp-dark);
+  padding: 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.order-modal-close:hover { background: var(--blush-deep); transform: scale(1.05); }
+.order-modal-close:focus-visible { outline: 3px solid var(--rasp); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .order-modal,
+  .order-modal-card { animation: none; }
 }
 
 /* ───────── Contact ───────── */
