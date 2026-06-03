@@ -4,8 +4,11 @@ import { useState, useMemo, useEffect } from 'react'
 // Google Apps Script Web App URL. The script appends each order to a Google
 // Sheet, saves inspo photos to Drive, and emails the customer a copy + notifies
 // Kate. See docs/order-form-google-sheet.md for the script + setup steps.
-// Set VITE_ORDER_ENDPOINT in your Vercel env / .env.local to enable real sends.
-const ENDPOINT = import.meta.env.VITE_ORDER_ENDPOINT || ''
+// VITE_ORDER_ENDPOINT (Vercel env / .env.local) overrides the baked-in default
+// below — handy if the Apps Script is ever re-deployed to a new URL.
+const ENDPOINT =
+  import.meta.env.VITE_ORDER_ENDPOINT ||
+  'https://script.google.com/macros/s/AKfycbx4xQSDooNGTlLZWolr-wlSc6VIyM4V4dps7b0Erd1CctI92kdxzplasCBCo6_tsEAh/exec'
 
 // Pickup time slots: every 15 minutes from 9:00 AM to 7:00 PM (inclusive).
 const TIME_SLOTS = (() => {
@@ -96,13 +99,34 @@ function PaperclipIcon() {
   )
 }
 
-function readFileAsDataUrl(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () =>
-      resolve({ name: file.name, type: file.type, dataUrl: reader.result })
-    reader.onerror = reject
-    reader.readAsDataURL(file)
+// Downscale + re-encode a photo to keep the upload small (camera-roll images
+// are often several MB; base64 inflates them ~33%, which can break the POST).
+// Falls back to the original file if the image can't be decoded (e.g. odd HEIC).
+function compressImage(file, maxDim = 1600, quality = 0.82) {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file)
+    const img = new Image()
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height))
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.round(img.width * scale)
+      canvas.height = Math.round(img.height * scale)
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+      resolve({
+        name: file.name.replace(/\.(png|webp|heic|heif|gif)$/i, '.jpg'),
+        type: 'image/jpeg',
+        dataUrl: canvas.toDataURL('image/jpeg', quality),
+      })
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      const reader = new FileReader()
+      reader.onload = () =>
+        resolve({ name: file.name, type: file.type, dataUrl: reader.result })
+      reader.readAsDataURL(file)
+    }
+    img.src = url
   })
 }
 
@@ -139,7 +163,7 @@ function Order() {
     setSubmitting(true)
     setError('')
     try {
-      const photos = await Promise.all(files.map(readFileAsDataUrl))
+      const photos = await Promise.all(files.map((f) => compressImage(f)))
       const payload = { ...form, photos, submittedAt: new Date().toISOString() }
 
       if (ENDPOINT) {

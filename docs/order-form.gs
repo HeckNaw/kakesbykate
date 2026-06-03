@@ -23,18 +23,27 @@ var HEADERS = [
 ]
 
 function doPost(e) {
+  var data
   try {
-    var data = JSON.parse(e.postData.contents)
-
-    var photoLinks = savePhotos_(data)
-    appendRow_(data, photoLinks)
-    emailCustomer_(data)
-    emailKate_(data, photoLinks)
-
-    return json_({ ok: true })
+    data = JSON.parse(e.postData.contents)
   } catch (err) {
-    return json_({ ok: false, error: String(err) })
+    return json_({ ok: false, error: 'Bad request: ' + err })
   }
+
+  // Photos and emails are best-effort — never let them lose the order itself.
+  var photoLinks = []
+  try { photoLinks = savePhotos_(data) } catch (err) { photoLinks = ['(photos failed: ' + err + ')'] }
+
+  try {
+    appendRow_(data, photoLinks)
+  } catch (err) {
+    return json_({ ok: false, error: 'Could not save order: ' + err })
+  }
+
+  try { emailCustomer_(data) } catch (err) { /* customer copy is non-critical */ }
+  try { emailKate_(data, photoLinks) } catch (err) { /* alert is non-critical */ }
+
+  return json_({ ok: true })
 }
 
 // Append the order as a row, creating the header row on first run.
