@@ -137,6 +137,7 @@ function Order() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
   const sectionRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   // Object URLs for thumbnail previews. useMemo creates them as `files` changes;
   // the effect's cleanup revokes the *previous* set (already replaced on screen),
@@ -173,7 +174,10 @@ function Order() {
   }
 
   function handleFiles(e) {
-    setFiles((existing) => [...existing, ...Array.from(e.target.files || [])])
+    // Capture the picked files NOW — clearing the input below empties
+    // e.target.files before React runs the state updater.
+    const picked = Array.from(e.target.files || [])
+    setFiles((existing) => [...existing, ...picked])
     e.target.value = ''
   }
 
@@ -483,6 +487,7 @@ function Order() {
                 <div className="form-block file-block">
                   <span className="file-block-label">Inspiration photos (optional)</span>
                   <input
+                    ref={fileInputRef}
                     id="inspo-files"
                     type="file"
                     accept="image/*"
@@ -492,10 +497,14 @@ function Order() {
                     aria-label="Inspiration photos (optional)"
                   />
                   <div className="file-controls">
-                    <label htmlFor="inspo-files" className="file-input-button">
+                    <button
+                      type="button"
+                      className="file-input-button"
+                      onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                    >
                       <PaperclipIcon />
                       <span>{files.length === 0 ? 'Choose photos' : 'Add more photos'}</span>
-                    </label>
+                    </button>
                     {files.length > 0 && (
                       <span className="file-count" role="status">
                         {files.length} photo{files.length === 1 ? '' : 's'} attached

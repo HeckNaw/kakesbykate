@@ -896,7 +896,8 @@ a:hover { color: var(--rasp-dark); }
   border-color: var(--rasp);
   transform: translateY(-1px);
 }
-.file-input-native:focus-visible + .file-input-button {
+.file-input-native:focus-visible + .file-input-button,
+.file-input-button:focus-visible {
   outline: 3px solid var(--rasp);
   outline-offset: 3px;
 }
