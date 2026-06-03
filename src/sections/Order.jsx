@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 
 // ───────── Config ─────────
 // Google Apps Script Web App URL. The script appends each order to a Google
@@ -112,6 +112,10 @@ function Order() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+
+  // Object URLs for thumbnail previews; revoked when the file list changes.
+  const previews = useMemo(() => files.map((f) => URL.createObjectURL(f)), [files])
+  useEffect(() => () => previews.forEach((url) => URL.revokeObjectURL(url)), [previews])
 
   function update(field) {
     return (e) => setForm((f) => ({ ...f, [field]: e.target.value }))
@@ -443,23 +447,31 @@ function Order() {
                     className="file-input-native"
                     aria-label="Inspiration photos (optional)"
                   />
-                  <label htmlFor="inspo-files" className="file-input-button">
-                    <PaperclipIcon />
-                    <span>{files.length === 0 ? 'Choose photos' : 'Add more photos'}</span>
-                  </label>
+                  <div className="file-controls">
+                    <label htmlFor="inspo-files" className="file-input-button">
+                      <PaperclipIcon />
+                      <span>{files.length === 0 ? 'Choose photos' : 'Add more photos'}</span>
+                    </label>
+                    {files.length > 0 && (
+                      <span className="file-count" role="status">
+                        {files.length} photo{files.length === 1 ? '' : 's'} attached
+                      </span>
+                    )}
+                  </div>
                   {files.length > 0 && (
-                    <ul className="file-list">
+                    <ul className="file-previews">
                       {files.map((f, i) => (
-                        <li key={`${f.name}-${i}`}>
-                          <span className="file-name">{f.name}</span>
+                        <li key={`${f.name}-${i}`} className="file-preview">
+                          <img src={previews[i]} alt={f.name} />
                           <button
                             type="button"
-                            className="file-remove"
+                            className="file-remove-thumb"
                             aria-label={`Remove ${f.name}`}
                             onClick={() => removeFile(i)}
                           >
                             ×
                           </button>
+                          <span className="file-preview-name">{f.name}</span>
                         </li>
                       ))}
                     </ul>
