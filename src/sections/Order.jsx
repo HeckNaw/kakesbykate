@@ -462,9 +462,6 @@ function Order() {
                       placeholder="Any custom requests…"
                     />
                   </label>
-                  <p className="order-note order-note--price form-block">
-                    Macarons are a <strong>set price of $24 per dozen.</strong>
-                  </p>
                 </div>
               )}
 
@@ -573,9 +570,9 @@ function Order() {
               ×
             </button>
             <div className="order-modal-emoji" aria-hidden="true">🎂</div>
-            <h3 id="order-thanks-title">Sweet — we got it!</h3>
+            <h3 id="order-thanks-title">Thank you for your order!</h3>
             <p>
-              Kate will review your request and reply within 48 hours via Instagram or email.
+              You will get a reply within 48 hours via Instagram or email.
               {form.email ? ' A copy of your order has been sent to your inbox.' : ''}
             </p>
             <button type="button" className="btn btn-primary" onClick={closeThanks}>
