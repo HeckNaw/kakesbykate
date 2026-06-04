@@ -1,4 +1,8 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
+import iconCupcake from '../assets/button1.png'
+import iconCake from '../assets/button2.png'
+import iconMacaron from '../assets/button3.png'
+import iconOther from '../assets/button4.png'
 
 // ───────── Config ─────────
 // Google Apps Script Web App URL. The script appends each order to a Google
@@ -24,10 +28,10 @@ const TIME_SLOTS = (() => {
 })()
 
 const PRODUCTS = [
-  { id: 'cake', label: 'Cake', emoji: '🎂' },
-  { id: 'cupcake', label: 'Cupcakes', emoji: '🧁' },
-  { id: 'macarons', label: 'Macarons', emoji: '🍬' },
-  { id: 'other', label: 'Other', emoji: '✨' },
+  { id: 'cake', label: 'Cake', icon: iconCake },
+  { id: 'cupcake', label: 'Cupcakes', icon: iconCupcake },
+  { id: 'macarons', label: 'Macarons', icon: iconMacaron },
+  { id: 'other', label: 'Other', icon: iconOther },
 ]
 
 // Serving estimates are approximate — adjust to match Kate's actual sizing.
@@ -255,7 +259,7 @@ function Order() {
                   type="email"
                   value={form.email}
                   onChange={update('email')}
-                  placeholder="so we can send your order copy"
+                  placeholder="so we can send your quote"
                 />
               </label>
               <label>
@@ -273,7 +277,7 @@ function Order() {
                   type="tel"
                   value={form.phone}
                   onChange={update('phone')}
-                  placeholder="(optional)"
+                  placeholder="+1 (647) 123-4567"
                 />
               </label>
               <label>
@@ -321,7 +325,7 @@ function Order() {
                   aria-pressed={form.productType === p.id}
                   onClick={() => selectProduct(p.id)}
                 >
-                  <span className="product-emoji" aria-hidden="true">{p.emoji}</span>
+                  <img className="product-icon" src={p.icon} alt="" aria-hidden="true" />
                   <span className="product-label">{p.label}</span>
                 </button>
               ))}

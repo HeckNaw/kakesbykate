@@ -758,7 +758,18 @@ a:hover { color: var(--rasp-dark); }
   outline: 3px solid var(--rasp);
   outline-offset: 3px;
 }
-.product-emoji { font-size: 1.7rem; line-height: 1; }
+.product-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--blush-deep);
+  transition: transform 0.2s ease;
+}
+.product-option:hover .product-icon { transform: scale(1.06) rotate(-3deg); }
+.product-option.is-selected .product-icon { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--rasp); }
 .product-label { letter-spacing: 0.02em; }
 
 /* Notes & errors */
