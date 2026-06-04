@@ -16,21 +16,21 @@ const REVIEWS = [
     name: 'Shriana',
     tilt: 'tilt-a',
     quote:
-      'Best cake ever — it fed a family of 14 and was demolished! The filling was so freaking good. I’m not a cake person but I’ll always buy one… we loved that it actually had crushed Oreos!',
+      'Best cake ever! It fed a family of 14 and was demolished! The filling was so freaking good. I’m not a cake person but I’ll always buy one… we loved that it actually had crushed Oreos!',
   },
   {
     img: review2,
     name: 'Rameeka',
     tilt: 'tilt-b',
     quote:
-      'Thank you sooo much! All my friends loved it — they said it’s so yummy. We loved the cake, it was gorgeous… you make my birthday every year! 🥹',
+      'Thank you sooo much! All my friends loved it. They said it’s so yummy. We loved the cake, it was gorgeous… you make my birthday every year! 🥹',
   },
   {
     img: review3,
     name: 'Tracy',
     tilt: 'tilt-c',
     quote:
-      'My son brought home some macarons on Mother’s Day — I must say they are the best I have ever had, hands down!',
+      'My son brought home some macarons on Mother’s Day. I must say they are the best I have ever had, hands down!',
   },
 ]
 
