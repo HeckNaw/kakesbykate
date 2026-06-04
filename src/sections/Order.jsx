@@ -28,10 +28,10 @@ const TIME_SLOTS = (() => {
 })()
 
 const PRODUCTS = [
-  { id: 'cake', label: 'Cake', icon: iconCake },
-  { id: 'cupcake', label: 'Cupcakes', icon: iconCupcake },
-  { id: 'macarons', label: 'Macarons', icon: iconMacaron },
-  { id: 'other', label: 'Other', icon: iconOther },
+  { id: 'cake', label: 'Cake', icon: iconCake, iconScale: 1, iconX: '0px', iconY: '0px' },
+  { id: 'cupcake', label: 'Cupcakes', icon: iconCupcake, iconScale: 0.78, iconX: '-2px', iconY: '3px' },
+  { id: 'macarons', label: 'Macarons', icon: iconMacaron, iconScale: 1, iconX: '0px', iconY: '0px' },
+  { id: 'other', label: 'Other', icon: iconOther, iconScale: 1.15, iconX: '-3px', iconY: '3px' },
 ]
 
 // Serving estimates are approximate — adjust to match Kate's actual sizing.
@@ -140,7 +140,6 @@ function Order() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
-  const sectionRef = useRef(null)
   const fileInputRef = useRef(null)
 
   // Object URLs for thumbnail previews. useMemo creates them as `files` changes;
@@ -212,12 +211,6 @@ function Order() {
       }
 
       setSubmitted(true)
-      // Bring the popup into view (it's anchored within the order section).
-      const section = sectionRef.current
-      if (section) {
-        if (window.__lenis) window.__lenis.scrollTo(section, { offset: -10 })
-        else section.scrollIntoView({ behavior: 'smooth' })
-      }
     } catch (err) {
       setError(
         'Something went wrong sending your order. Please try again, or reach out on Instagram.'
@@ -231,7 +224,7 @@ function Order() {
   const showPhotos = ['cake', 'cupcake', 'other'].includes(form.productType)
 
   return (
-    <section id="order" ref={sectionRef} className="section section-order">
+    <section id="order" className="section section-order">
       <div className="section-head reveal">
         <span className="section-num" data-num="03">— place an order</span>
         <h2>Tell us about<br /><em>your order.</em></h2>
@@ -325,7 +318,9 @@ function Order() {
                   aria-pressed={form.productType === p.id}
                   onClick={() => selectProduct(p.id)}
                 >
-                  <img className="product-icon" src={p.icon} alt="" aria-hidden="true" />
+                  <span className="product-icon" style={{ '--icon-scale': p.iconScale, '--icon-x': p.iconX, '--icon-y': p.iconY }}>
+                    <img src={p.icon} alt="" aria-hidden="true" />
+                  </span>
                   <span className="product-label">{p.label}</span>
                 </button>
               ))}

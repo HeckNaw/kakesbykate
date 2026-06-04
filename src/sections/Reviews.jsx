@@ -155,6 +155,15 @@ function Reviews() {
     }
   }
 
+  function closeReview() {
+    setDone(false)
+    setName('')
+    setFeedback('')
+    setRating(0)
+    setHover(0)
+    setFiles([])
+  }
+
   return (
     <section id="reviews" className="section section-reviews">
       <div className="section-head reveal">
@@ -179,13 +188,7 @@ function Reviews() {
       </div>
 
       <div className="review-form-wrap reveal">
-        {done ? (
-          <div className="review-done">
-            <h3>Thank you — you’re the sweetest! 🧁</h3>
-            <p>Your review means the world to Kate.</p>
-          </div>
-        ) : (
-          <form className="review-form" onSubmit={handleSubmit}>
+        <form className="review-form" onSubmit={handleSubmit}>
             <h3>Leave a review</h3>
             <p className="review-form-sub">Tasted something delightful? Tell us about it.</p>
 
@@ -292,9 +295,21 @@ function Reviews() {
                 {submitting ? 'Sending…' : 'Share review →'}
               </button>
             </div>
-          </form>
-        )}
+        </form>
       </div>
+
+      {done && (
+        <div className="order-modal" role="dialog" aria-modal="true"
+          aria-labelledby="review-thanks-title" onClick={closeReview}>
+          <div className="order-modal-card" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="order-modal-close" aria-label="Close" onClick={closeReview}>×</button>
+            <div className="order-modal-emoji" aria-hidden="true">🧁</div>
+            <h3 id="review-thanks-title">Thank you — you’re the sweetest!</h3>
+            <p>Your review means the world to Kate.</p>
+            <button type="button" className="btn btn-primary" onClick={closeReview}>Done</button>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
