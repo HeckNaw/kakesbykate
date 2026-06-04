@@ -29,7 +29,7 @@ function Footer() {
         </div>
         <div>
           <h4>Contact</h4>
-          <p><a href="mailto:kakesbykate24@gmail.com">kakesbykate24@gmail.com</a></p>
+          <p><a href="mailto:orders@kakesbykate.com">orders@kakesbykate.com</a></p>
         </div>
         <div>
           <h4>Follow</h4>
