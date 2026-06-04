@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef } from 'react'
 import review1 from '../assets/review1.jpg'
 import review2 from '../assets/review2.jpg'
 import review3 from '../assets/review3.jpg'
+import logo from '../assets/kake.webp'
 
 // Same Google Apps Script endpoint as the order form; reviews are tagged with
 // type:'review' so the script writes them to the "Reviews" sheet tab instead.
@@ -303,9 +304,9 @@ function Reviews() {
           aria-labelledby="review-thanks-title" onClick={closeReview}>
           <div className="order-modal-card" onClick={(e) => e.stopPropagation()}>
             <button type="button" className="order-modal-close" aria-label="Close" onClick={closeReview}>×</button>
-            <div className="order-modal-emoji" aria-hidden="true">🧁</div>
-            <h3 id="review-thanks-title">Thank you — you’re the sweetest!</h3>
-            <p>Your review means the world to Kate.</p>
+            <img className="order-modal-logo" src={logo} alt="" aria-hidden="true" />
+            <h3 id="review-thanks-title">Thank you for the feedback!</h3>
+            <p>Your review means the world to us!</p>
             <button type="button" className="btn btn-primary" onClick={closeReview}>Done</button>
           </div>
         </div>

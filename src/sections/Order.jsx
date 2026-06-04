@@ -3,6 +3,7 @@ import iconCupcake from '../assets/button1.png'
 import iconCake from '../assets/button2.png'
 import iconMacaron from '../assets/button3.png'
 import iconOther from '../assets/button4.png'
+import logo from '../assets/kake.webp'
 
 // ───────── Config ─────────
 // Google Apps Script Web App URL. The script appends each order to a Google
@@ -29,9 +30,9 @@ const TIME_SLOTS = (() => {
 
 const PRODUCTS = [
   { id: 'cake', label: 'Cake', icon: iconCake, iconScale: 1, iconX: '0px', iconY: '0px' },
-  { id: 'cupcake', label: 'Cupcakes', icon: iconCupcake, iconScale: 0.78, iconX: '-2px', iconY: '3px' },
+  { id: 'cupcake', label: 'Cupcakes', icon: iconCupcake, iconScale: 0.72, iconX: '0px', iconY: '2px' },
   { id: 'macarons', label: 'Macarons', icon: iconMacaron, iconScale: 1, iconX: '0px', iconY: '0px' },
-  { id: 'other', label: 'Other', icon: iconOther, iconScale: 1.15, iconX: '-3px', iconY: '3px' },
+  { id: 'other', label: 'Other', icon: iconOther, iconScale: 1.3, iconX: '-1px', iconY: '1px' },
 ]
 
 // Serving estimates are approximate — adjust to match Kate's actual sizing.
@@ -568,11 +569,10 @@ function Order() {
             >
               ×
             </button>
-            <div className="order-modal-emoji" aria-hidden="true">🎂</div>
+            <img className="order-modal-logo" src={logo} alt="" aria-hidden="true" />
             <h3 id="order-thanks-title">Thank you for your order!</h3>
             <p>
               You will get a reply within 48 hours via Instagram or email.
-              {form.email ? ' A copy of your order has been sent to your inbox.' : ''}
             </p>
             <button type="button" className="btn btn-primary" onClick={closeThanks}>
               Done

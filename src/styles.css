@@ -1081,6 +1081,12 @@ a:hover { color: var(--rasp-dark); }
   line-height: 1;
   margin-bottom: 0.5rem;
 }
+.order-modal-logo {
+  width: 56px;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.7rem;
+}
 .order-modal-card h3 {
   font-family: var(--script);
   color: var(--rasp);
