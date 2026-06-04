@@ -25,7 +25,7 @@ var HEADERS = [
 ]
 
 // Columns written to the Reviews tab, in order.
-var REVIEW_HEADERS = ['Submitted', 'Name', 'Rating (out of 5)', 'Feedback']
+var REVIEW_HEADERS = ['Submitted', 'Name', 'Rating (out of 5)', 'Feedback', 'Photos']
 
 function doPost(e) {
   var data
@@ -64,6 +64,9 @@ function doPost(e) {
 
 // Append a review to the Reviews tab, creating it + headers on first run.
 function appendReview_(d) {
+  var photoLinks = []
+  try { photoLinks = savePhotos_(d) } catch (err) { photoLinks = ['(photos failed: ' + err + ')'] }
+
   var ss = SpreadsheetApp.getActive()
   var sheet = ss.getSheetByName(REVIEW_SHEET_NAME) || ss.insertSheet(REVIEW_SHEET_NAME)
   if (sheet.getLastRow() === 0) {
@@ -75,6 +78,7 @@ function appendReview_(d) {
     d.name || '',
     d.rating || '',
     d.feedback || '',
+    photoLinks.join('\n'),
   ])
 }
 

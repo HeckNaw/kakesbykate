@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import review1 from '../assets/review1.jpg'
 import review2 from '../assets/review2.jpg'
 import review3 from '../assets/review3.jpg'
@@ -7,7 +7,7 @@ import review3 from '../assets/review3.jpg'
 // type:'review' so the script writes them to the "Reviews" sheet tab instead.
 const ENDPOINT =
   import.meta.env.VITE_ORDER_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbx4xQSDooNGTlLZWolr-wlSc6VIyM4V4dps7b0Erd1CctI92kdxzplasCBCo6_tsEAh/exec'
+  'https://script.google.com/macros/s/AKfycbxBAJADcyOgBLDb5ojuGUUk7bxJyqR3NERhbMXmamGEUxiuMEKVsGFxdAlkNpdh1Ja8/exec'
 
 const REVIEWS = [
   {
@@ -38,7 +38,44 @@ const RATING_LABELS = {
   2: 'A little plain',
   3: 'Pretty tasty',
   4: 'Really delicious',
-  5: 'Absolutely scrumptious!',
+  5: 'Soooo yummy!',
+}
+
+function PaperclipIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+    </svg>
+  )
+}
+
+// Downscale + re-encode a photo before upload (same as the order form).
+function compressImage(file, maxDim = 1600, quality = 0.82) {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file)
+    const img = new Image()
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height))
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.round(img.width * scale)
+      canvas.height = Math.round(img.height * scale)
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+      resolve({
+        name: file.name.replace(/\.(png|webp|heic|heif|gif)$/i, '.jpg'),
+        type: 'image/jpeg',
+        dataUrl: canvas.toDataURL('image/jpeg', quality),
+      })
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      const reader = new FileReader()
+      reader.onload = () => resolve({ name: file.name, type: file.type, dataUrl: reader.result })
+      reader.readAsDataURL(file)
+    }
+    img.src = url
+  })
 }
 
 function Cupcake() {
@@ -65,8 +102,21 @@ function Reviews() {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
   const [error, setError] = useState('')
+  const [files, setFiles] = useState([])
+  const fileInputRef = useRef(null)
 
   const shown = hover || rating
+  const previews = useMemo(() => files.map((f) => URL.createObjectURL(f)), [files])
+  useEffect(() => () => previews.forEach((u) => URL.revokeObjectURL(u)), [previews])
+
+  function handleFiles(e) {
+    const picked = Array.from(e.target.files || [])
+    setFiles((existing) => [...existing, ...picked])
+    e.target.value = ''
+  }
+  function removeFile(idx) {
+    setFiles((fs) => fs.filter((_, i) => i !== idx))
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -77,11 +127,13 @@ function Reviews() {
     setSubmitting(true)
     setError('')
     try {
+      const photos = await Promise.all(files.map((f) => compressImage(f)))
       const payload = {
         type: 'review',
         name,
         rating,
         feedback,
+        photos,
         submittedAt: new Date().toISOString(),
       }
       if (ENDPOINT) {
@@ -107,9 +159,10 @@ function Reviews() {
     <section id="reviews" className="section section-reviews">
       <div className="section-head reveal">
         <span className="section-num" data-num="04">— kind words</span>
-        <h2>Sweet things<br /><em>people say.</em></h2>
+        <h2>Liked it?<br /><em>Leave a review!</em></h2>
         <p className="lede">
-          A few of the lovely notes our customers have sent after their first bite.
+          Let us know what you thought of your order, and share any
+          feedback you have about your experience.
         </p>
       </div>
 
@@ -142,12 +195,11 @@ function Reviews() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="First name is perfect"
               />
             </label>
 
             <div className="rating-field">
-              <span>How sweet was it?</span>
+              <span>How was it?</span>
               <div
                 className="rating"
                 role="radiogroup"
@@ -172,7 +224,7 @@ function Reviews() {
                 ))}
               </div>
               <p className="rating-label">
-                {shown ? `${shown} — ${RATING_LABELS[shown]}` : 'Tap a cupcake to rate'}
+                {shown ? `${shown} — ${RATING_LABELS[shown]}` : 'Tap a cupcake'}
               </p>
             </div>
 
@@ -182,9 +234,56 @@ function Reviews() {
                 required
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
-                placeholder="What did you order, and what did you love about it?"
+                placeholder="What did you order, and what did you think about it?"
               />
             </label>
+
+            <div className="form-block file-block">
+              <span className="file-block-label">Photos (optional)</span>
+              <input
+                ref={fileInputRef}
+                id="review-files"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFiles}
+                className="file-input-native"
+                aria-label="Photos (optional)"
+              />
+              <div className="file-controls">
+                <button
+                  type="button"
+                  className="file-input-button"
+                  onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                >
+                  <PaperclipIcon />
+                  <span>{files.length === 0 ? 'Add photos' : 'Add more photos'}</span>
+                </button>
+                {files.length > 0 && (
+                  <span className="file-count" role="status">
+                    {files.length} photo{files.length === 1 ? '' : 's'} attached
+                  </span>
+                )}
+              </div>
+              {files.length > 0 && (
+                <ul className="file-previews">
+                  {files.map((f, i) => (
+                    <li key={`${f.name}-${i}`} className="file-preview">
+                      <img src={previews[i]} alt={f.name} />
+                      <button
+                        type="button"
+                        className="file-remove-thumb"
+                        aria-label={`Remove ${f.name}`}
+                        onClick={() => removeFile(i)}
+                      >
+                        ×
+                      </button>
+                      <span className="file-preview-name">{f.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             {error && <p className="review-error">{error}</p>}
 
