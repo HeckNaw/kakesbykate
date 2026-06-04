@@ -1198,6 +1198,8 @@ a:hover { color: var(--rasp-dark); }
 }
 .site-footer a { color: var(--paper); text-decoration: underline; text-decoration-color: rgba(253, 246, 237, 0.5); text-underline-offset: 3px; }
 .site-footer a:hover { color: var(--blush); text-decoration-color: var(--blush); }
+.footer-social { display: inline-flex; align-items: center; gap: 0.45rem; }
+.footer-social svg { flex-shrink: 0; }
 .footer-inner {
   display: grid;
   grid-template-columns: 1.4fr repeat(2, 1fr);
