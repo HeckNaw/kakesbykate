@@ -12,7 +12,7 @@ import iconOther from '../assets/button4.png'
 // below — handy if the Apps Script is ever re-deployed to a new URL.
 const ENDPOINT =
   import.meta.env.VITE_ORDER_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbx4xQSDooNGTlLZWolr-wlSc6VIyM4V4dps7b0Erd1CctI92kdxzplasCBCo6_tsEAh/exec'
+  'https://script.google.com/macros/s/AKfycbwT2toz9znkPadREwXybiEn1sjNrPDaFDU-2EW7EZVgW6TB3nWtxzXAOR8tM9lOmjGX/exec'
 
 // Pickup time slots: every 15 minutes from 9:00 AM to 7:00 PM (inclusive).
 const TIME_SLOTS = (() => {

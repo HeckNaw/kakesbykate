@@ -7,7 +7,7 @@ import review3 from '../assets/review3.jpg'
 // type:'review' so the script writes them to the "Reviews" sheet tab instead.
 const ENDPOINT =
   import.meta.env.VITE_ORDER_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbxBAJADcyOgBLDb5ojuGUUk7bxJyqR3NERhbMXmamGEUxiuMEKVsGFxdAlkNpdh1Ja8/exec'
+  'https://script.google.com/macros/s/AKfycbwT2toz9znkPadREwXybiEn1sjNrPDaFDU-2EW7EZVgW6TB3nWtxzXAOR8tM9lOmjGX/exec'
 
 const REVIEWS = [
   {
