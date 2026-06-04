@@ -1,12 +1,13 @@
-# Order form → Google Sheet (+ email copy)
+# Order + review forms → Google Sheet (+ email copy)
 
-The order form (`src/sections/Order.jsx`) POSTs each submission to a **Google
-Apps Script Web App**. That script:
+The order form (`src/sections/Order.jsx`) and review form
+(`src/sections/Reviews.jsx`) both POST to one **Google Apps Script Web App**.
+That script:
 
-1. Appends a row to a Google Sheet (your order log).
-2. Saves any inspiration photos to a Drive folder and links them in the row.
-3. Emails the **customer** a copy of their order.
-4. Emails **Kate** a notification of the new order.
+1. **Orders** → appends a row to the **Orders** tab, saves inspiration photos to
+   a Drive folder (linked in the row), emails the **customer** a copy, and
+   notifies **Kate**.
+2. **Reviews** → appends a row to the **Reviews** tab and notifies **Kate**.
 
 No paid services required — Apps Script, Sheets, Drive and Gmail are all free.
 
@@ -16,7 +17,8 @@ No paid services required — Apps Script, Sheets, Drive and Gmail are all free.
 
 1. Go to <https://sheets.google.com> and create a new spreadsheet, e.g.
    **"Kakes by Kate — Orders"**.
-2. Note the tab name (default is `Sheet1`).
+2. Rename the default tab to **`Orders`** (the script also auto-creates `Orders`
+   and `Reviews` tabs if they don't exist, but renaming keeps existing data).
 
 ## 2. Add the Apps Script
 

@@ -6,6 +6,7 @@ import Home from './sections/Home'
 import InstaFeature from './sections/InstaFeature'
 import Menu from './sections/Menu'
 import Order from './sections/Order'
+import Reviews from './sections/Reviews'
 import Contact from './sections/Contact'
 import Footer from './sections/Footer'
 import './styles.css'
@@ -94,6 +95,7 @@ function App() {
         <InstaFeature />
         <Menu />
         <Order />
+        <Reviews />
         <Contact />
       </main>
       <Footer />

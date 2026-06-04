@@ -1,18 +1,20 @@
 /**
- * Kakes by Kate — order form handler.
+ * Kakes by Kate — order + review form handler.
  *
- * Receives an order POSTed from the website, logs it to this spreadsheet,
- * saves inspo photos to Drive, emails the customer a copy, and notifies Kate.
+ * Orders are logged to the "Orders" tab, inspo photos saved to Drive, the
+ * customer emailed a copy, and Kate notified. Reviews (type:'review') are
+ * logged to the "Reviews" tab and Kate is notified.
  *
  * Setup & deployment steps: see docs/order-form-google-sheet.md
  */
 
 // ───────── Config ─────────
-var KATE_EMAIL = 'kate@example.com'        // ← where new-order alerts are sent
+var KATE_EMAIL = 'kate@example.com'        // ← where new-order / review alerts go
 var DRIVE_FOLDER_NAME = 'Kakes by Kate — Order Photos'
-var SHEET_NAME = 'Sheet1'                   // ← your tab name
+var SHEET_NAME = 'Orders'                   // ← orders tab
+var REVIEW_SHEET_NAME = 'Reviews'           // ← reviews tab (auto-created)
 
-// Columns written to the sheet, in order.
+// Columns written to the Orders tab, in order.
 var HEADERS = [
   'Submitted', 'Product', 'Name', 'Email', 'Instagram / Facebook', 'Phone',
   'Pickup date', 'Pickup time',
@@ -22,12 +24,26 @@ var HEADERS = [
   'Other description', 'Photos',
 ]
 
+// Columns written to the Reviews tab, in order.
+var REVIEW_HEADERS = ['Submitted', 'Name', 'Rating (out of 5)', 'Feedback']
+
 function doPost(e) {
   var data
   try {
     data = JSON.parse(e.postData.contents)
   } catch (err) {
     return json_({ ok: false, error: 'Bad request: ' + err })
+  }
+
+  // Reviews go to their own tab.
+  if (data.type === 'review') {
+    try {
+      appendReview_(data)
+    } catch (err) {
+      return json_({ ok: false, error: 'Could not save review: ' + err })
+    }
+    try { emailKateReview_(data) } catch (err) { /* alert is non-critical */ }
+    return json_({ ok: true })
   }
 
   // Photos and emails are best-effort — never let them lose the order itself.
@@ -44,6 +60,32 @@ function doPost(e) {
   try { emailKate_(data, photoLinks) } catch (err) { /* alert is non-critical */ }
 
   return json_({ ok: true })
+}
+
+// Append a review to the Reviews tab, creating it + headers on first run.
+function appendReview_(d) {
+  var ss = SpreadsheetApp.getActive()
+  var sheet = ss.getSheetByName(REVIEW_SHEET_NAME) || ss.insertSheet(REVIEW_SHEET_NAME)
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(REVIEW_HEADERS)
+    sheet.getRange(1, 1, 1, REVIEW_HEADERS.length).setFontWeight('bold')
+  }
+  sheet.appendRow([
+    d.submittedAt || new Date().toISOString(),
+    d.name || '',
+    d.rating || '',
+    d.feedback || '',
+  ])
+}
+
+function emailKateReview_(d) {
+  var subject = 'New review: ' + (d.rating || '?') + '/5 from ' + (d.name || 'a customer')
+  GmailApp.sendEmail(
+    KATE_EMAIL,
+    subject,
+    'Rating: ' + (d.rating || '') + '/5\nName: ' + (d.name || '') + '\n\n' + (d.feedback || ''),
+    { name: 'Kakes by Kate Reviews' }
+  )
 }
 
 // Append the order as a row, creating the header row on first run.

@@ -2,7 +2,7 @@ function Contact() {
   return (
     <section id="contact" className="section section-contact">
       <div className="section-head reveal">
-        <span className="section-num" data-num="04">— say hello</span>
+        <span className="section-num" data-num="05">— say hello</span>
         <h2>Send us<br/><em>a message!</em></h2>
         <p className="lede">
           We cater birthday parties, weddings, corporate events, and more. Contact us for quotes on custom orders.

@@ -5,7 +5,8 @@ const SECTIONS = [
   { id: 'home',    label: 'Home',    num: '01' },
   { id: 'menu',    label: 'Menu',    num: '02' },
   { id: 'order',   label: 'Order',   num: '03' },
-  { id: 'contact', label: 'Contact', num: '04' },
+  { id: 'reviews', label: 'Reviews', num: '04' },
+  { id: 'contact', label: 'Contact', num: '05' },
 ]
 
 function Header() {

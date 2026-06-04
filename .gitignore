@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Large source review screenshots — optimized .jpg versions are used instead
+src/assets/review*.png

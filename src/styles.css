@@ -474,6 +474,10 @@ a:hover { color: var(--rasp-dark); }
   padding-bottom: clamp(6rem, 12vw, 11rem);
   position: relative;
 }
+.section-reviews {
+  padding-top: 0;
+  padding-bottom: clamp(6rem, 12vw, 11rem);
+}
 .section-contact {
   padding-top: 0;
   padding-bottom: clamp(6rem, 12vw, 11rem);
@@ -1456,4 +1460,215 @@ a:hover { color: var(--rasp-dark); }
   .reveal { opacity: 1; transform: none; transition: none; }
   .hp-1, .hp-2, .hp-3 { animation: none; }
   .splash { display: none; }
+}
+
+/* ───────── Reviews ───────── */
+.reviews-showcase {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.6rem, 4vw, 3rem);
+  max-width: 1040px;
+  margin: 0 auto clamp(3.5rem, 8vw, 6rem);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .reviews-showcase {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    gap: 3rem;
+  }
+}
+.review-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Polaroid photo — same frame/tilt/hover effect as the hero photos */
+.review-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow:
+    0 1px 0 rgba(58, 26, 35, 0.04),
+    0 22px 44px -14px rgba(58, 26, 35, 0.28),
+    0 0 0 9px var(--paper);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+.review-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+.review-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.08) contrast(1.02);
+}
+.review-card.tilt-a .review-photo { transform: rotate(-2.6deg); }
+.review-card.tilt-b .review-photo { transform: rotate(2.2deg); }
+.review-card.tilt-c .review-photo { transform: rotate(-3.4deg); }
+.review-photo:hover {
+  transform: rotate(0deg) translateY(-6px);
+  box-shadow:
+    0 1px 0 rgba(58, 26, 35, 0.04),
+    0 30px 64px -10px rgba(58, 26, 35, 0.36),
+    0 0 0 9px var(--paper);
+}
+
+.review-quote {
+  margin: 2rem 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--plum-soft);
+}
+.review-name {
+  margin-top: 0.9rem;
+  font-family: var(--script);
+  font-size: 1.7rem;
+  color: var(--rasp);
+}
+
+/* Review form card */
+.review-form-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(1.8rem, 4vw, 2.8rem);
+  background: var(--paper);
+  border: 2px solid var(--blush-deep);
+  border-radius: 24px;
+  box-shadow:
+    0 1px 0 var(--blush-deep),
+    0 32px 80px -30px rgba(207, 85, 103, 0.35);
+}
+.review-form { display: flex; flex-direction: column; gap: 1.4rem; }
+.review-form h3 {
+  font-family: var(--script);
+  color: var(--rasp);
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+}
+.review-form-sub {
+  text-align: center;
+  color: var(--plum-soft);
+  margin: -0.8rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+.review-form label { display: flex; flex-direction: column; gap: 0.4rem; }
+.review-form label > span {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--rasp);
+}
+.review-form input,
+.review-form textarea {
+  font: inherit;
+  font-family: var(--body);
+  font-size: 1.05rem;
+  color: var(--plum);
+  background: var(--paper);
+  border: 2px solid var(--blush-deep);
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.review-form textarea { resize: vertical; min-height: 120px; }
+.review-form input:focus,
+.review-form textarea:focus {
+  outline: none;
+  border-color: var(--rasp);
+  box-shadow: 0 0 0 4px rgba(207, 85, 103, 0.18);
+}
+.review-form input::placeholder,
+.review-form textarea::placeholder { color: var(--plum-soft); opacity: 0.6; }
+
+/* Cupcake rating */
+.rating-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: center;
+}
+.rating-field > span {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--rasp);
+}
+.rating { display: flex; gap: 0.4rem; }
+.cupcake-btn {
+  background: none;
+  border: 0;
+  padding: 0.25rem;
+  cursor: pointer;
+  line-height: 0;
+  transform-origin: bottom center;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.cupcake-btn:hover { transform: translateY(-3px) scale(1.12); }
+.cupcake-btn:active { transform: translateY(0) scale(0.95); }
+.cupcake-btn:focus-visible { outline: 3px solid var(--rasp); outline-offset: 3px; border-radius: 8px; }
+.cupcake { width: 40px; height: 40px; display: block; }
+.cupcake .cc-cherry,
+.cupcake .cc-frost,
+.cupcake .cc-cup {
+  fill: none;
+  stroke: var(--blush-deep);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+  transition: fill 0.18s ease, stroke 0.18s ease;
+}
+.cupcake-btn.is-on .cc-cherry { fill: var(--rasp-dark); stroke: var(--rasp-dark); }
+.cupcake-btn.is-on .cc-frost { fill: var(--rasp); stroke: var(--rasp); }
+.cupcake-btn.is-on .cc-cup { fill: var(--blush-deep); stroke: var(--blush-deep); }
+.rating-label {
+  margin: 0;
+  min-height: 1.4em;
+  font-family: var(--script);
+  font-size: 1.5rem;
+  color: var(--rasp);
+}
+
+.review-submit-row { text-align: center; margin-top: 0.3rem; }
+.review-error {
+  margin: 0;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  background: rgba(207, 85, 103, 0.12);
+  border: 1.5px solid var(--rasp);
+  border-radius: 14px;
+  color: var(--rasp-dark);
+  font-size: 0.92rem;
+}
+.review-done { text-align: center; padding: 1.4rem 0; }
+.review-done h3 {
+  font-family: var(--script);
+  color: var(--rasp);
+  font-size: clamp(1.9rem, 4vw, 2.4rem);
+  line-height: 1.05;
+  margin: 0 0 0.5rem;
+}
+.review-done p { color: var(--plum-soft); margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .review-photo,
+  .cupcake-btn { transition: none; }
+  .review-photo:hover { transform: rotate(0deg); }
 }
