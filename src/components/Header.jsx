@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import logo from '../assets/kake.webp'
+import logo from '../assets/newlogo.webp'
 
 const SECTIONS = [
   { id: 'home',    label: 'Home',    num: '01' },

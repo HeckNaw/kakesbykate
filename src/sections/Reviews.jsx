@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import review1 from '../assets/review1.jpg'
-import review2 from '../assets/review2.jpg'
-import review3 from '../assets/review3.jpg'
+import review1 from '../assets/review1.webp'
+import review2 from '../assets/review2.webp'
+import review3 from '../assets/review3.webp'
 import logo from '../assets/kake.webp'
 
 // Same Google Apps Script endpoint as the order form; reviews are tagged with

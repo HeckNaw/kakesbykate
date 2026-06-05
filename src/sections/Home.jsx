@@ -1,6 +1,6 @@
-import cake1 from "../assets/cake1.jpg";
-import cupcake1 from "../assets/cupcake1.jpg";
-import macaron1 from "../assets/macaron1.jpg";
+import cake1 from "../assets/cake1.webp";
+import cupcake1 from "../assets/cupcake1.webp";
+import macaron1 from "../assets/macaron1.webp";
 
 function scrollTo(id) {
   return (e) => {

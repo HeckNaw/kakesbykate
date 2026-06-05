@@ -1,4 +1,4 @@
-import logo from '../assets/kake.webp'
+import logo from '../assets/newlogo.webp'
 
 function InstagramIcon() {
   return (

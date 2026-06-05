@@ -1,8 +1,8 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import iconCupcake from '../assets/button1.png'
-import iconCake from '../assets/button2.png'
-import iconMacaron from '../assets/button3.png'
-import iconOther from '../assets/button4.png'
+import iconCupcake from '../assets/button1.webp'
+import iconCake from '../assets/button2.webp'
+import iconMacaron from '../assets/button3.webp'
+import iconOther from '../assets/button4.webp'
 import logo from '../assets/kake.webp'
 
 // ───────── Config ─────────

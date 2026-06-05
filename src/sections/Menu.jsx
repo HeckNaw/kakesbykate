@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import menuImg from "../assets/menu.png";
+import menuImg from "../assets/menu.webp";
 
 function Menu() {
   const [open, setOpen] = useState(false);
