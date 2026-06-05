@@ -1217,9 +1217,10 @@ a:hover { color: var(--rasp-dark); }
   width: 64px;
   height: 64px;
   object-fit: contain;
+  object-position: calc(50% - 1px) calc(50% - 5px);
   background: #ffabbb;
   border-radius: 50%;
-  padding: 6px;
+  padding: 4px;
 }
 .footer-tag {
   font-family: var(--script);
