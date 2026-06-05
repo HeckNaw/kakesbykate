@@ -48,7 +48,7 @@ function Header() {
   return (
     <header className="site-header">
       <a href="#home" onClick={scrollTo('home')} className="brand">
-        <img src={logo} alt="Kakes by Kate" className="brand-logo" />
+        <img src={logo} alt="Kakes by Kate" className="brand-logo" width="46" height="46" />
         <span className="brand-name">kakes by kate</span>
       </a>
       <nav className="site-nav">
