@@ -8,7 +8,7 @@ import logo from '../assets/kake.webp'
 // type:'review' so the script writes them to the "Reviews" sheet tab instead.
 const ENDPOINT =
   import.meta.env.VITE_ORDER_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbxGgy7Vo-ysVDxqFaCY9VGI3qpHjvlh9Ev3I_HniBM-ktwnXoibtbeUB5_emitlCYrw/exec'
+  'https://script.google.com/macros/s/AKfycbzIOB6UuR4vO2mtgalXDAoVQTOc9IVI0bU7l3qa6Z7d2aOjhr4TC_ezD3eejr1uspSd/exec'
 
 const REVIEWS = [
   {

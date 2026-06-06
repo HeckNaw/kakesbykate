@@ -13,7 +13,7 @@ import logo from '../assets/kake.webp'
 // below — handy if the Apps Script is ever re-deployed to a new URL.
 const ENDPOINT =
   import.meta.env.VITE_ORDER_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbxGgy7Vo-ysVDxqFaCY9VGI3qpHjvlh9Ev3I_HniBM-ktwnXoibtbeUB5_emitlCYrw/exec'
+  'https://script.google.com/macros/s/AKfycbzIOB6UuR4vO2mtgalXDAoVQTOc9IVI0bU7l3qa6Z7d2aOjhr4TC_ezD3eejr1uspSd/exec'
 
 // Pickup time slots: every 15 minutes from 9:00 AM to 7:00 PM (inclusive).
 const TIME_SLOTS = (() => {
