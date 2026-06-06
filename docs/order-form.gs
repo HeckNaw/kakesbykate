@@ -10,7 +10,7 @@
 
 // ───────── Config ─────────
 // Where new-order / review alerts go. Comma-separate to notify several inboxes.
-var KATE_EMAIL = 'orders@kakesbykate.com, katelynngo0524@gmail.com'
+var KATE_EMAIL = 'orders@kakesbykate.com, katelynngo0524@gmail.com, natealexmills@icloud.com'
 var DRIVE_FOLDER_NAME = 'Kakes by Kate — Order Photos'
 var SHEET_NAME = 'Orders'                   // ← orders tab
 var REVIEW_SHEET_NAME = 'Reviews'           // ← reviews tab (auto-created)
