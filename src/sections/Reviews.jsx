@@ -20,10 +20,10 @@ const REVIEWS = [
   },
   {
     img: review2,
-    name: 'Rameeka',
+    name: 'Anmol',
     tilt: 'tilt-b',
     quote:
-      'Thank you sooo much! All my friends loved it. They said it’s so yummy. We loved the cake, it was gorgeous… you make my birthday every year! 🥹',
+      "I've been ordering from Katelyn for over five years, and she is an absolute gem! Every single time, she recreates pictures perfectly down to the smallest detail, and her recipes have become a family favourite. I cannot recommend her highly enough. You won't be disappointed!",
   },
   {
     img: review3,

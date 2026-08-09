@@ -392,6 +392,94 @@ a:hover { color: var(--rasp-dark); }
 }
 .section-head .lede { max-width: 44ch; }
 
+/* ───────── Launch banner (banana pudding) ───────── */
+/* Announcement bar under the header. Scrolls away with the page; tucked
+   behind the sticky header (z-index 50) as it goes. */
+.launch-banner {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.9rem, 2.5vw, 1.8rem);
+  min-height: clamp(76px, 7.5vw, 98px);
+  padding: 0.4rem clamp(1.2rem, 4vw, 3.5rem);
+  background: var(--rasp);
+  border-bottom: 1px solid var(--rasp-dark);
+}
+.launch-banner-inner {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: clamp(0.9rem, 2vw, 1.6rem);
+}
+.launch-banner-title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3.3vw, 2.1rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--paper);
+  white-space: nowrap;
+}
+.launch-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.7rem;
+  border-radius: 999px;
+  background: var(--blush-soft);
+  color: var(--rasp-dark);
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
+}
+.launch-banner-cta:hover {
+  background: var(--paper);
+  color: var(--rasp-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--rasp-dark);
+}
+.launch-banner-cta:active { transform: translateY(1px); box-shadow: none; }
+
+/* Banana photo — plain PNG, no frame or effect. Sits inline, directly to the
+   right of the button. */
+.launch-banner-photo {
+  flex: none;
+  width: clamp(120px, 13vw, 168px);
+  height: clamp(90px, 9.5vw, 124px);
+}
+.launch-banner-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Tight screens: stack vertically — message + button on top, a larger banana
+   photo centered below them. */
+@media (max-width: 600px) {
+  .launch-banner {
+    flex-direction: column;
+    gap: 1.2rem;
+    min-height: 0;
+    padding: 1.6rem 1rem 1.9rem;
+  }
+  .launch-banner-inner { flex: 0 1 auto; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  .launch-banner-title { flex: 0 1 auto; font-size: clamp(1.5rem, 7.4vw, 2.1rem); }
+  .launch-banner-cta { padding: 0.7rem 1.8rem; font-size: 1rem; }
+  /* Photo flows under the text + button and gets noticeably bigger. */
+  .launch-banner-photo {
+    width: clamp(240px, 76vw, 340px);
+    height: clamp(184px, 58vw, 256px);
+  }
+}
+
 /* ───────── Buttons (chunky + cute) ───────── */
 .btn {
   display: inline-flex;

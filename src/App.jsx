@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import Header from './components/Header'
+import LaunchBanner from './components/LaunchBanner'
 import SplashScreen from './components/SplashScreen'
 import Home from './sections/Home'
 import InstaFeature from './sections/InstaFeature'
@@ -90,6 +91,7 @@ function App() {
     <div className="site">
       {splashing && <SplashScreen onDone={dismissSplash} />}
       <Header />
+      <LaunchBanner />
       <main>
         <Home />
         <InstaFeature />

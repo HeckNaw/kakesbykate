@@ -149,7 +149,7 @@ function getFolder_(name) {
 // Email the customer a copy of their order.
 function emailCustomer_(d) {
   if (!d.email) return
-  var subject = 'Your Kakes by Kate order request 🍰'
+  var subject = 'Your Kakes by Kate order request'
   GmailApp.sendEmail(d.email, subject, summaryText_(d, false), {
     name: 'Kakes by Kate',
     htmlBody: summaryHtml_(d, false),
@@ -213,7 +213,7 @@ function summaryHtml_(d, forKate) {
     (d.productType === 'macarons'
       ? 'Macarons are a set price of <strong>$24 per dozen.</strong> You’ll receive confirmation and pickup + payment details within 48 hours.'
       : 'You’ll receive an order quote within 48 hours via Instagram or email, then your pickup address and payment options.') +
-    '</p><p>Thank you! — Kate 💕</p>'
+    '</p><p>Thank you! — Kate</p>'
   return '<div style="font-family:sans-serif;color:#3a1a23;">' + intro +
     '<table style="border-collapse:collapse;">' + rows + '</table>' + outro + '</div>'
 }
