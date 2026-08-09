@@ -427,7 +427,9 @@ a:hover { color: var(--rasp-dark); }
   display: inline-flex;
   align-items: center;
   padding: 0.65rem 1.7rem;
+  border: none;
   border-radius: 999px;
+  cursor: pointer;
   background: var(--blush-soft);
   color: var(--rasp-dark);
   font-family: var(--body);
@@ -439,13 +441,19 @@ a:hover { color: var(--rasp-dark); }
   transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
     background 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
 }
-.launch-banner-cta:hover {
+.launch-banner-cta:hover:not(:disabled) {
   background: var(--paper);
   color: var(--rasp-dark);
   transform: translateY(-1px);
   box-shadow: 0 4px 0 var(--rasp-dark);
 }
-.launch-banner-cta:active { transform: translateY(1px); box-shadow: none; }
+.launch-banner-cta:active:not(:disabled) { transform: translateY(1px); box-shadow: none; }
+/* Disabled until the pre-order page ships — reads as a status pill, not a
+   button you can press. */
+.launch-banner-cta:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
 
 /* Banana photo — plain PNG, no frame or effect. Sits inline, directly to the
    right of the button. */
