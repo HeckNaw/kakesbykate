@@ -392,7 +392,7 @@ a:hover { color: var(--rasp-dark); }
 }
 .section-head .lede { max-width: 44ch; }
 
-/* ───────── Launch banner (banana pudding) ───────── */
+/* ───────── Launch banner (UofT Holiday Market) ───────── */
 /* Announcement bar under the header. Scrolls away with the page; tucked
    behind the sticky header (z-index 50) as it goes. */
 .launch-banner {
@@ -401,66 +401,67 @@ a:hover { color: var(--rasp-dark); }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(0.9rem, 2.5vw, 1.8rem);
-  min-height: clamp(76px, 7.5vw, 98px);
-  padding: 0.4rem clamp(1.2rem, 4vw, 3.5rem);
+  gap: clamp(1rem, 3vw, 2.4rem);
+  padding: 0.9rem clamp(1.2rem, 4vw, 3.5rem);
   background: var(--rasp);
   border-bottom: 1px solid var(--rasp-dark);
+  overflow: hidden;
 }
 .launch-banner-inner {
   display: flex;
   flex: none;
   align-items: center;
-  gap: clamp(0.9rem, 2vw, 1.6rem);
+  gap: clamp(1rem, 2.4vw, 1.8rem);
 }
 .launch-banner-title {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   font-family: var(--display);
   font-weight: 700;
-  font-size: clamp(1.3rem, 3.3vw, 2.1rem);
+  font-size: clamp(1.3rem, 3.3vw, 2.2rem);
+  line-height: 1.05;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--paper);
   white-space: nowrap;
 }
-.launch-banner-cta {
+.launch-banner-eyebrow {
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: 0.62em;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--blush);
+  margin-bottom: 0.15em;
+}
+/* Date + time pill. */
+.launch-banner-when {
   display: inline-flex;
   align-items: center;
-  padding: 0.65rem 1.7rem;
-  border: none;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.6rem 1.4rem;
   border-radius: 999px;
-  cursor: pointer;
   background: var(--blush-soft);
   color: var(--rasp-dark);
   font-family: var(--body);
   font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.03em;
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
-    background 0.2s ease, color 0.2s ease, box-shadow 0.25s ease;
-}
-.launch-banner-cta:hover:not(:disabled) {
-  background: var(--paper);
-  color: var(--rasp-dark);
-  transform: translateY(-1px);
   box-shadow: 0 4px 0 var(--rasp-dark);
 }
-.launch-banner-cta:active:not(:disabled) { transform: translateY(1px); box-shadow: none; }
-/* Disabled until the pre-order page ships — reads as a status pill, not a
-   button you can press. */
-.launch-banner-cta:disabled {
-  cursor: default;
-  opacity: 0.7;
-}
+.launch-banner-dot { margin-left: -3px;color: var(--rasp); }
 
-/* Banana photo — plain PNG, no frame or effect. Sits inline, directly to the
-   right of the button. */
+/* Market photo — cookie + pudding cups, slight tilt with a soft shadow. */
 .launch-banner-photo {
   flex: none;
-  width: clamp(120px, 13vw, 168px);
-  height: clamp(90px, 9.5vw, 124px);
+  width: clamp(110px, 12vw, 160px);
+  aspect-ratio: 1;
+  transform: rotate(4deg);
+  filter: drop-shadow(0 6px 10px rgba(58, 26, 35, 0.3));
 }
 .launch-banner-photo img {
   width: 100%;
@@ -469,23 +470,23 @@ a:hover { color: var(--rasp-dark); }
   display: block;
 }
 
-/* Tight screens: stack vertically — message + button on top, a larger banana
-   photo centered below them. */
-@media (max-width: 600px) {
+/* Tight screens: stack vertically — headline + pill on top, a larger photo
+   centered below them. */
+@media (max-width: 720px) {
   .launch-banner {
     flex-direction: column;
-    gap: 1.2rem;
-    min-height: 0;
-    padding: 1.6rem 1rem 1.9rem;
+    gap: 1.1rem;
+    padding: 1.6rem 1rem 1.8rem;
   }
-  .launch-banner-inner { flex: 0 1 auto; flex-wrap: wrap; justify-content: center; gap: 1rem; }
-  .launch-banner-title { flex: 0 1 auto; font-size: clamp(1.5rem, 7.4vw, 2.1rem); }
-  .launch-banner-cta { padding: 0.7rem 1.8rem; font-size: 1rem; }
-  /* Photo flows under the text + button and gets noticeably bigger. */
-  .launch-banner-photo {
-    width: clamp(240px, 76vw, 340px);
-    height: clamp(184px, 58vw, 256px);
+  .launch-banner-inner { flex-direction: column; gap: 1rem; }
+  .launch-banner-title {
+    align-items: center;
+    text-align: center;
+    white-space: normal;
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
   }
+  .launch-banner-when { font-size: 1rem; }
+  .launch-banner-photo { width: clamp(200px, 60vw, 280px); }
 }
 
 /* ───────── Buttons (chunky + cute) ───────── */

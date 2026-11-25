@@ -1,26 +1,29 @@
-import banana from '../assets/banana.png'
+import marketPhoto from '../assets/holiday-market.webp'
 
-// Announcement bar for the banana pudding launch. Sits directly under the
-// sticky header and scrolls away with the page. The banana photo reuses the
-// same polaroid treatment as the hero collage (.hp).
+// Announcement bar for the UofT Holiday Market pop-up. Sits directly under
+// the sticky header and scrolls away with the page.
 //
-// NOTE: the CTA is disabled and reads "Coming soon" until the dedicated
-// pre-order page is built.
+// The photo is newbanana.png cropped to its visible content (the source has
+// a lot of transparent padding) and saved as holiday-market.webp.
 function LaunchBanner() {
   return (
     <div
       className="launch-banner"
       role="region"
-      aria-label="Banana pudding launch announcement"
+      aria-label="UofT Holiday Market announcement"
     >
       <div className="launch-banner-inner">
-        <p className="launch-banner-title">New! Banana Pudding</p>
-        <button className="launch-banner-cta" type="button" disabled>
-          Coming soon
-        </button>
+        <p className="launch-banner-title">
+          <span className="launch-banner-eyebrow">December 2nd, 10AM-6PM @ UofT Bookstore</span>
+          UofT Holiday Market
+        </p>
+        <p className="launch-banner-when">
+          <time dateTime="2026-12-02T10:00">TRY OUR NEW</time>
+          <span className="launch-banner-dot" aria-hidden="true">ITEMS!!!</span>
+        </p>
       </div>
       <span className="launch-banner-photo" aria-hidden="true">
-        <img src={banana} alt="" />
+        <img src={marketPhoto} alt="" />
       </span>
     </div>
   )
